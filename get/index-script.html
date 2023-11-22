@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="txtMACAddress" />
+    <input type="text" id="txtComputerName" />
+
+    <script type="text/javascript">
+        var macAddress = "";
+        var computerName = "";
+
+        try {
+            var wmi = GetObject("winmgmts:{impersonationLevel=impersonate}");
+            var e = new Enumerator(wmi.ExecQuery("SELECT * FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled = True"));
+            for (; !e.atEnd(); e.moveNext()) {
+                var s = e.item();
+                macAddress = s.MACAddress;
+                computerName = s.DNSHostName;
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+
+        function GetObject(path) {
+            return new ActiveXObject("WbemScripting.SWbemLocator").ConnectServer().ExecQuery(path);
+        }
+
+        function GetMACAddress() {
+            return macAddress;
+        }
+
+        function GetComputerName() {
+            return computerName;
+        }
+
+        function GetMACAddressAndComputerName() {
+            return macAddress + " - " + computerName;
+        }
+
+        // Set values to input elements
+        document.getElementById("txtMACAddress").value = GetMACAddress();
+        document.getElementById("txtComputerName").value = GetComputerName();
+
+        // Log to console
+        console.log("MAC Address: " + GetMACAddress());
+        console.log("Computer Name: " + computerName);
+    </script>
+</body>
+
+</html>

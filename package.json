@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "getmac": "^6.1.0",
+    "getmacaddress": "^1.2.2",
+    "macaddress": "^0.5.3",
+    "node-wmi": "^0.0.5"
+  }
+}
